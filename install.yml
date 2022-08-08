@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Download oneagent
+      get_url:
+        url: "{{ dynatrace_environment_url }}{{ dynatrace_paas_token }}&arch=x86"
+        dest: "/tmp/DynatraceOneAgent.sh"
+        validate_certs: no
+        timeout: 120
+        mode: 0555
+    - name: Install oneagent
+      shell: "/tmp/DynatraceOneAgent.sh --set-infra-only=false --set-app-log-content-access=true"
