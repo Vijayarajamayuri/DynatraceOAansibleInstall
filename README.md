@@ -3,7 +3,7 @@
 ##simple playbook with no hostgroups:
 
 
-`---
+`---`
 - hosts: all
   become: true
   roles:
