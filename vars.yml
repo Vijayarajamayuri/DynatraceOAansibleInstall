@@ -1,0 +1,2 @@
+dynatrace_environment_url: "https://qwl01543.live.dynatrace.com/api/v1/deployment/installer/agent/unix/default/latest?Api-Token"
+dynatrace_paas_token: "dt0c01.MLZ6TKLZPSIMQSMLIWWTZJEB.43IDVLZV75T6ORBUFUI45V3DGKPITA6HOVP4QGAPB4P2FTRDJXRLLKUKOIHENAHB"
