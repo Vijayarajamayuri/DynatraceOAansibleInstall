@@ -1,0 +1,129 @@
+mayuriakula@Mayuris-Air Downloads % kubectl get pods -n dynatrace                                             
+NAME                                 READY   STATUS    RESTARTS   AGE
+dynakube-activegate-0                1/1     Running   0          4m32s
+dynatrace-operator-bc57596c9-ljlkm   1/1     Running   0          45m
+dynatrace-webhook-77769c4d6f-8pdfl   1/1     Running   0          45m
+dynatrace-webhook-77769c4d6f-z4ww5   1/1     Running   0          45m
+mayuriakula@Mayuris-Air Downloads % k describe pod dynakube-activegate-0 -n dynatrace
+Name:             dynakube-activegate-0
+Namespace:        dynatrace
+Priority:         0
+Service Account:  dynatrace-kubernetes-monitoring
+Node:             aks-systempool-29904484-vmss000001/10.224.0.33
+Start Time:       Sun, 16 Apr 2023 21:26:52 -0500
+Labels:           app.kubernetes.io/component=activegate
+                  app.kubernetes.io/created-by=dynakube
+                  app.kubernetes.io/managed-by=dynatrace-operator
+                  app.kubernetes.io/name=activegate
+                  app.kubernetes.io/version=1.261.190.20230314-090653
+                  controller-revision-hash=dynakube-activegate-7b5b455576
+                  statefulset.kubernetes.io/pod-name=dynakube-activegate-0
+Annotations:      internal.operator.dynatrace.com/activegate-configuration-hash: 2836819979
+Status:           Running
+IP:               10.224.0.34
+IPs:
+  IP:           10.224.0.34
+Controlled By:  StatefulSet/dynakube-activegate
+Init Containers:
+  certificate-loader:
+    Container ID:  containerd://92877f987aae680824a3f3cc6237f014423b6c3218e69e9d7424edfc77fd34da
+    Image:         rfy82220.live.dynatrace.com/linux/activegate:latest
+    Image ID:      rfy82220.live.dynatrace.com/linux/activegate@sha256:bc7e2f03197c6b9aaab725559b641e3583a115a7af143b03e0f48ff33897efcc
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/bash
+    Args:
+      -c
+      /opt/dynatrace/gateway/k8scrt2jks.sh
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 16 Apr 2023 21:27:10 -0500
+      Finished:     Sun, 16 Apr 2023 21:27:11 -0500
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     1
+      memory:  1536Mi
+    Requests:
+      cpu:        500m
+      memory:     512Mi
+    Environment:  <none>
+    Mounts:
+      /var/lib/dynatrace/gateway/ssl from truststore-volume (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-lkgv8 (ro)
+Containers:
+  activegate:
+    Container ID:   containerd://05102abd3eecd06721c90e0eca35c9608fbef2feece1db41e16cd63bda413a36
+    Image:          rfy82220.live.dynatrace.com/linux/activegate:latest
+    Image ID:       rfy82220.live.dynatrace.com/linux/activegate@sha256:bc7e2f03197c6b9aaab725559b641e3583a115a7af143b03e0f48ff33897efcc
+    Ports:          9999/TCP, 9998/TCP
+    Host Ports:     0/TCP, 0/TCP
+    State:          Running
+      Started:      Sun, 16 Apr 2023 21:27:15 -0500
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     1
+      memory:  1536Mi
+    Requests:
+      cpu:      500m
+      memory:   512Mi
+    Readiness:  http-get https://:https/rest/health delay=90s timeout=1s period=15s #success=1 #failure=3
+    Environment:
+      DT_CAPABILITIES:            MSGrouter,kubernetes_monitoring,restInterface
+      DT_ID_SEED_NAMESPACE:       dynatrace
+      DT_ID_SEED_K8S_CLUSTER_ID:  84df2455-077a-44c9-a3c3-da5f86cfdab4
+      DT_DEPLOYMENT_METADATA:     orchestration_tech=Operator-active_gate;script_version=v0.10.4;orchestrator_id=84df2455-077a-44c9-a3c3-da5f86cfdab4
+      DT_DNS_ENTRY_POINT:         https://$(DYNAKUBE_ACTIVEGATE_SERVICE_HOST):$(DYNAKUBE_ACTIVEGATE_SERVICE_PORT)/communication
+      DT_TENANT:                  <set to the key 'tenant-uuid' of config map 'dynakube-activegate-connection-info'>              Optional: false
+      DT_SERVER:                  <set to the key 'communication-endpoints' of config map 'dynakube-activegate-connection-info'>  Optional: false
+    Mounts:
+      /opt/dynatrace/gateway/jre/lib/security/cacerts from truststore-volume (ro,path="k8s-local.jks")
+      /var/lib/dynatrace/secrets/tokens/auth-token from ag-authtoken-secret (ro,path="auth-token")
+      /var/lib/dynatrace/secrets/tokens/tenant-token from connection-info-secret (ro,path="tenant-token")
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-lkgv8 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  truststore-volume:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  ag-authtoken-secret:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  dynakube-activegate-authtoken-secret
+    Optional:    false
+  connection-info-secret:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  dynakube-activegate-tenant-secret
+    Optional:    false
+  kube-api-access-lkgv8:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 kubernetes.io/arch=amd64:NoSchedule
+                             node.kubernetes.io/memory-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  4m47s  default-scheduler  Successfully assigned dynatrace/dynakube-activegate-0 to aks-systempool-29904484-vmss000001
+  Normal  Pulling    4m46s  kubelet            Pulling image "rfy82220.live.dynatrace.com/linux/activegate:latest"
+  Normal  Pulled     4m29s  kubelet            Successfully pulled image "rfy82220.live.dynatrace.com/linux/activegate:latest" in 17.339888947s (17.339900947s including waiting)
+  Normal  Created    4m29s  kubelet            Created container certificate-loader
+  Normal  Started    4m29s  kubelet            Started container certificate-loader
+  Normal  Pulling    4m25s  kubelet            Pulling image "rfy82220.live.dynatrace.com/linux/activegate:latest"
+  Normal  Pulled     4m25s  kubelet            Successfully pulled image "rfy82220.live.dynatrace.com/linux/activegate:latest" in 90.968528ms (90.972528ms including waiting)
+  Normal  Created    4m24s  kubelet            Created container activegate
+  Normal  Started    4m24s  kubelet            Started container activegate
