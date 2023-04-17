@@ -1,0 +1,23 @@
+!/bin/ksh
+#stty istrip 
+alias dir="ls"
+
+alias prnstuff-"/home/j23341/scripts/ksh/print.sh" 
+alias sp=". $ (HOME) / .setprompt" 
+alias k="kubectl"
+alias kcd-'kubectl config set-context $ (kubectl config current-context) --namesp
+ace'
+alias kcc='kubectI config use-context'
+
+alias kpwd='kubect1 config current-context'
+alias kssh='kubectl exec -it " 
+alias kIs='kubect] get alias k="kubectl"
+alias ked='kubect] config set-context $ (kubect] config current-context) --namespace'
+alias kcc='kubectl config use-context'
+alias kpwd='kubectl config current-context'
+alias kssh='kubectl exec -it'
+alias kls='kubectl get'
+alias kpo='kubect1 get po -o wide' 
+alias kdesc='kubectl describe'
+alias kpall='kubectl get po --all-namespaces -o wide'
+alias kg-'kubecti get constraints' 
